@@ -1,0 +1,1 @@
+Web3.js: Collection of libraries that allow for interaction with a local or remote ethereum node.
