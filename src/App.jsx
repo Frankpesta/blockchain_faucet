@@ -13,7 +13,6 @@ function App() {
 		const loadProvider = async () => {
 			const provider = await detectEthereumProvider();
 			if (provider) {
-				provider.request({ method: "eth_requestAccounts" });
 				setWeb3Api({
 					web3: new Web3(provider),
 					provider,
@@ -33,6 +32,10 @@ function App() {
 		web3Api.web3 && getAccount();
 	}, [web3Api.web3]);
 
+	const handleConnectWallet = () => {
+		web3Api.provider.request({ method: "eth_requestAccounts" });
+	};
+
 	return (
 		<>
 			<div className="faucet-wrapper">
@@ -40,12 +43,22 @@ function App() {
 					<span>
 						<strong>Account:</strong>
 					</span>
-					<h1>{account ? account : "No account connected"}</h1>
+					<h1>
+						{account ? (
+							account
+						) : (
+							<button
+								className="button is-info is-small my-4"
+								onClick={handleConnectWallet}>
+								Connect Wallet
+							</button>
+						)}
+					</h1>
 					<div className="balance-view is-size-2">
 						Current Balance: <strong>10</strong> ETH
 					</div>
-					<button className="btn mr-2">Donate</button>
-					<button className="btn">Withdraw</button>
+					<button className="button is-primary mr-2">Donate</button>
+					<button className="button is-link">Withdraw</button>
 				</div>
 			</div>
 		</>
